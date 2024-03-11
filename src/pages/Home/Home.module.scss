@@ -54,7 +54,22 @@
     }
 
 }
+
 .Links {
     text-align: center;
     margin: 2.5rem 0;
+    font-size: 1.25rem;
+
+    p {
+        a {
+            font-size: 1.5rem;
+            transition: 0.5s;
+            font-style: italic;
+
+            &:hover {
+                color: red;
+            }
+        }
+
+    }
 }
