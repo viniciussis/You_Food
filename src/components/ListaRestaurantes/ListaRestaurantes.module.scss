@@ -1,4 +1,20 @@
 .ListaRestaurantes {
   margin-top: 1.5rem;
   padding: 2rem;
+  
+  &__viewMore {
+    margin-top: 2rem;
+    margin-left: 1rem;
+    padding: 0.5rem 2.5rem ;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 20px;
+    border: solid 2px black;
+    transition: 0.75s;
+
+    &:hover {
+      background-color: black;
+      color: white;
+    }
+  }
 }
