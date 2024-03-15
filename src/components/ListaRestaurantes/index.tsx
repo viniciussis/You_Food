@@ -4,37 +4,29 @@ import style from './ListaRestaurantes.module.scss'
 import Restaurante from './Restaurante'
 import axios from 'axios'
 import { IPaginacao } from '@/interfaces/IPaginacao'
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 const ListaRestaurantes = () => {
   const [restaurants, setRestaurants] = useState<IRestaurante[]>([])
   const [nextPage, setNextPage] = useState('')
+  const [lastPage, setLastPage] = useState('')
 
-  useEffect(() => {
+  function uploadRestautants(url: string) {
     axios
-      .get<IPaginacao<IRestaurante>>(
-        'http://localhost:8000/api/v1/restaurantes/',
-      )
+      .get<IPaginacao<IRestaurante>>(url)
       .then((response) => {
         setRestaurants(response.data.results)
         setNextPage(response.data.next)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-
-  function viewMore() {
-    axios
-      .get<IPaginacao<IRestaurante>>(nextPage
-      )
-      .then((response) => {
-        setRestaurants([...restaurants, ...response.data.results],)
-        setNextPage(response.data.next)
+        setLastPage(response.data.previous)
       })
       .catch((err) => {
         console.log(err)
       })
   }
+
+  useEffect(() => {
+    uploadRestautants('http://localhost:8000/api/v1/restaurantes/')
+  }, [])
 
   return (
     <section className={style.ListaRestaurantes}>
@@ -44,14 +36,24 @@ const ListaRestaurantes = () => {
       {restaurants?.map((item) => (
         <Restaurante restaurante={item} key={item.id} />
       ))}
-      {nextPage && (
-        <button
-          className={style.ListaRestaurantes__viewMore}
-          onClick={() => viewMore()}
-        >
-          Ver mais
-        </button>
-      )}
+      {
+        <>
+          <button
+            className={style.ListaRestaurantes__viewMore}
+            onClick={() => uploadRestautants(lastPage)}
+            disabled={!lastPage}
+          >
+            Última Página <FaArrowLeft size={20} />
+          </button>
+          <button
+            className={style.ListaRestaurantes__viewMore}
+            onClick={() => uploadRestautants(nextPage)}
+            disabled={!nextPage}
+          >
+            Proxíma Página <FaArrowRight size={20} />
+          </button>
+        </>
+      }
     </section>
   )
 }
