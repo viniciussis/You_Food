@@ -10,7 +10,8 @@ interface RestauranteProps {
 }
 
 const Restaurante = ({ restaurante }: RestauranteProps) => {
-  const [meals, setMeals] = useState<IPrato[]>()
+  const [meals, setMeals] = useState<IPrato[]>([])
+
   useEffect(() => {
     axios
       .get<IPrato[]>(
@@ -19,7 +20,7 @@ const Restaurante = ({ restaurante }: RestauranteProps) => {
       .then((response) => {
         setMeals(response.data)
       })
-  }, [restaurante.id])
+  }, [restaurante])
 
   return (
     <section className={estilos.Restaurante}>
@@ -27,8 +28,8 @@ const Restaurante = ({ restaurante }: RestauranteProps) => {
         <h2>{restaurante.nome}</h2>
       </div>
       <div>
-        {meals?.map((item) => (
-          <Prato prato={item} key={item.id} />
+        {meals?.map((meal) => (
+          <Prato prato={meal} key={meal.id} />
         ))}
       </div>
     </section>
