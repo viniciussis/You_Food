@@ -29,6 +29,16 @@ const AdminLayout = () => {
                   Novo Restaurante
                 </Button>
               </Link>
+              <Link component={RouterLink} to="/admin/pratos/">
+                <Button color="primary" variant="contained">
+                  Pratos
+                </Button>
+              </Link>
+              <Link component={RouterLink} to="/admin/pratos/novo/">
+                <Button color="primary" variant="contained">
+                  Novo Prato
+                </Button>
+              </Link>
             </Box>
           </Toolbar>
         </Container>

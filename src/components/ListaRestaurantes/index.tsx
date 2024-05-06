@@ -3,7 +3,7 @@ import IRestaurante from '../../interfaces/IRestaurante'
 import style from './ListaRestaurantes.module.scss'
 import Restaurante from './Restaurante'
 import axios, { AxiosRequestConfig } from 'axios'
-import { IPaginacao } from '@/interfaces/IPaginacao'
+import IPaginacao from '@/interfaces/IPaginacao'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 import {
   Button,

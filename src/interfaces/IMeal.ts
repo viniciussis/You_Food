@@ -1,4 +1,4 @@
-export default interface IPrato {
+export default interface IMeal {
   id: number
   nome: string
   tag: string

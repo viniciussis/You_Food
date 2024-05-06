@@ -12,7 +12,7 @@ import {
 import { Link } from 'react-router-dom'
 import http from '@/http'
 
-export const RestaurantList = () => {
+export const RestaurantsList = () => {
   const [restaurants, setRestaurants] = useState<IRestaurante[]>([])
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export const RestaurantList = () => {
               <TableCell>{restaurant.nome}</TableCell>
               <TableCell sx={{ textAlign: 'center' }}>
                 <Link to={`/admin/restaurantes/${restaurant.id}/`}>
-                  <Button variant="outlined" color="secondary">
+                  <Button variant="outlined" color="warning">
                     Editar
                   </Button>
                 </Link>

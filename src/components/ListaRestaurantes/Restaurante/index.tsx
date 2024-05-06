@@ -3,7 +3,7 @@ import IRestaurante from '../../../interfaces/IRestaurante'
 import Prato from '../Prato'
 import estilos from './Restaurante.module.scss'
 import axios from 'axios'
-import IPrato from '@/interfaces/IPrato'
+import IPrato from '@/interfaces/IMeal'
 
 interface RestauranteProps {
   restaurante: IRestaurante
