@@ -5,11 +5,13 @@ import Restaurante from './Restaurante'
 import axios from 'axios'
 import { IPaginacao } from '@/interfaces/IPaginacao'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import { TextField } from '@mui/material'
 
 const ListaRestaurantes = () => {
   const [restaurants, setRestaurants] = useState<IRestaurante[]>([])
   const [nextPage, setNextPage] = useState('')
   const [lastPage, setLastPage] = useState('')
+  const [search, setSearch] = useState('')
 
   function uploadRestautants(url: string) {
     axios
@@ -33,17 +35,26 @@ const ListaRestaurantes = () => {
       <h1>
         Os restaurantes mais <em>bacanas</em>!
       </h1>
+      <div>
+        <TextField 
+          type='search' 
+          label='Pesquisar restaurantes' 
+          variant='outlined'
+          value={search} 
+          onChange={(event) => setSearch(event.target.value)}
+        />
+      </div>
       {restaurants?.map((item) => (
         <Restaurante restaurante={item} key={item.id} />
       ))}
       {
-        <>
+        <div>
           <button
             className={style.ListaRestaurantes__viewMore}
             onClick={() => uploadRestautants(lastPage)}
             disabled={!lastPage}
           >
-            Última Página <FaArrowLeft size={20} />
+            <FaArrowLeft size={20} /> Última Página
           </button>
           <button
             className={style.ListaRestaurantes__viewMore}
@@ -52,7 +63,7 @@ const ListaRestaurantes = () => {
           >
             Proxíma Página <FaArrowRight size={20} />
           </button>
-        </>
+        </div>
       }
     </section>
   )

@@ -1,21 +1,29 @@
 import { Button, TextField } from '@mui/material'
 import axios from 'axios'
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export const RestaurantForm = () => {
   const params = useParams()
   const [restaurantName, setRestaurantName] = useState('')
+  const navigate = useNavigate()
 
-  function addRestaurant(event: React.FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    if (params.id) {
+      axios.get(`http://localhost:8000/api/v2/restaurantes/${params.id}/`)
+        .then(resp => setRestaurantName(resp.data.nome))
+    }
+  }, [params])
+
+  const onSubmittingForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!params) {
+    if (params.id) {
       axios
-        .post(`http://localhost:8000/api/v2/restaurantes/${params}`, {
+        .put(`http://localhost:8000/api/v2/restaurantes/${params.id}/`, {
           nome: restaurantName,
         })
         .then(() => {
-          setRestaurantName('')
+          navigate("/admin/restaurantes/")
         })
     } else {
       axios
@@ -23,17 +31,25 @@ export const RestaurantForm = () => {
           nome: restaurantName,
         })
         .then(() => {
-          setRestaurantName('')
+          navigate("/admin/restaurantes/")
         })
     }
   }
 
   return (
-    <form onSubmit={(event) => addRestaurant(event)}>
+    <form
+      style={{
+        padding: '1rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '1rem',
+      }}
+      onSubmit={(event) => onSubmittingForm(event)}
+    >
       <TextField
         value={restaurantName}
         onChange={(event) => setRestaurantName(event.target.value)}
-        id="standard-basic"
         label="Nome do restaurante..."
         variant="standard"
       />
